@@ -10,10 +10,20 @@ To run the server, execute the following command:
 go run main.go
 ```
 
-The server will start on port 8080. You can access it by navigating to `http://localhost:8080/courses` in your web browser.
+The server will start on port 8080. You can access it by navigating to `http://localhost:8080/canvas` in your web browser.
 
-## Looks like this
+## Starting project with binary
 
-![Website](static/images/golang-website.png)
+First, we need to build by executing this command:
+
+```bash
+go build -o main .
+```
+Then, running a binary by execute this command:
+
+```bash
+./main
+```
+
 
 
