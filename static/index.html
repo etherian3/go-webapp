@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creative Canvases - Creative Page</title>
+    <link rel="stylesheet" href="/static/canva.css">
+</head>
+
+<body class="body">
+    <nav>
+
+        <ul>
+            <!-- <li><a href="../index.html"><button aria-label="Back">Back</button></a></li> -->
+            <div class="second">
+                <li><button class="button" id="clear" aria-label="Clear">Clear</button></li>
+                <li><button class="button" id="save" aria-label="Save">Save</button></li>
+            </div>
+        </ul>
+    </nav>
+
+    <canvas id="canvas"></canvas>
+    <div class="nav">
+        <div class="clr" data-clr="#000"></div>
+        <div class="clr" data-clr="red"></div>
+        <div class="clr" data-clr="orange"></div>
+        <div class="clr" data-clr="blue"></div>
+        <div class="clr" data-clr="purple"></div>
+        <div class="clr" data-clr="yellowgreen"></div>
+        <div class="clr" data-clr="yellow"></div>
+        <div class="clr" data-clr="#fff"></div>
+        <input type="color" value="#0000FF" id="favcolor">
+        <input type="color" value="#FFFFFF" id="bgcolor" aria-label="Background Color">
+
+        <input type="range" name="brushSize" id="brushSize" value="5" min="1" max="10">
+    </div>
+    <footer class="footer">
+        <p>This website is created by Rafay Memon</p>
+    </footer>
+    <script src="/static/canva.js"></script>
+</body>
+
+</html>

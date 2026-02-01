@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Paint - Creative Canvases</title>
+    <link rel="stylesheet" href="/static/canva.css">
+    <link rel="stylesheet" href="/static/Background Gradient.css">
+</head>
+
+<body class="body">
+    <nav>
+        <ul>
+            <div class="logo">
+                <img src="/static/images/logo.png" alt="Logo" style="height: 40px;">
+            </div>
+            <div class="second">
+                <!-- Tool Selection Buttons -->
+                <li><button class="button tool-btn active" data-tool="brush" aria-label="Brush">🖌️ Brush</button></li>
+                <li><button class="button tool-btn" data-tool="rectangle" aria-label="Rectangle">▭ Rectangle</button>
+                </li>
+                <li><button class="button tool-btn" data-tool="circle" aria-label="Circle">○ Circle</button></li>
+                <li><button class="button tool-btn" data-tool="arrow" aria-label="Arrow">→ Arrow</button></li>
+                <li><button class="button tool-btn" data-tool="triangle" aria-label="Triangle">△ Triangle</button></li>
+                <li><button class="button tool-btn" data-tool="text" aria-label="Text">T Text</button></li>
+
+                <!-- Action Buttons -->
+                <li><button class="button" id="clear" aria-label="Clear">Clear</button></li>
+                <li><button class="button" id="save" aria-label="Save">Save</button></li>
+            </div>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Sidebar with tools -->
+        <div class="sidebar">
+            <h3>Colors</h3>
+            <div class="color-grid">
+                <!-- Expanded Color Palette -->
+                <div class="clr" data-clr="#000000" title="Black"></div>
+                <div class="clr" data-clr="#FFFFFF" title="White"></div>
+                <div class="clr" data-clr="#FF0000" title="Red"></div>
+                <div class="clr" data-clr="#FF6B00" title="Orange"></div>
+                <div class="clr" data-clr="#FFD700" title="Gold"></div>
+                <div class="clr" data-clr="#FFFF00" title="Yellow"></div>
+                <div class="clr" data-clr="#00FF00" title="Lime"></div>
+                <div class="clr" data-clr="#32CD32" title="Lime Green"></div>
+                <div class="clr" data-clr="#008000" title="Green"></div>
+                <div class="clr" data-clr="#00FFFF" title="Cyan"></div>
+                <div class="clr" data-clr="#0000FF" title="Blue"></div>
+                <div class="clr" data-clr="#4169E1" title="Royal Blue"></div>
+                <div class="clr" data-clr="#000080" title="Navy"></div>
+                <div class="clr" data-clr="#800080" title="Purple"></div>
+                <div class="clr" data-clr="#FF00FF" title="Magenta"></div>
+                <div class="clr" data-clr="#FF1493" title="Deep Pink"></div>
+                <div class="clr" data-clr="#FFC0CB" title="Pink"></div>
+                <div class="clr" data-clr="#8B4513" title="Brown"></div>
+                <div class="clr" data-clr="#A0522D" title="Sienna"></div>
+                <div class="clr" data-clr="#808080" title="Gray"></div>
+                <div class="clr" data-clr="#C0C0C0" title="Silver"></div>
+                <div class="clr" data-clr="#FFB6C1" title="Light Pink"></div>
+                <div class="clr" data-clr="#90EE90" title="Light Green"></div>
+                <div class="clr" data-clr="#87CEEB" title="Sky Blue"></div>
+            </div>
+
+            <div class="tool-section">
+                <label for="favcolor">Custom Color:</label>
+                <input type="color" value="#0000FF" id="favcolor" aria-label="Custom Color">
+            </div>
+
+            <div class="tool-section">
+                <label for="bgcolor">Background:</label>
+                <input type="color" value="#FFFFFF" id="bgcolor" aria-label="Background Color">
+            </div>
+
+            <div class="tool-section">
+                <label for="brushSize">Brush Size: <span id="brushSizeValue">5</span></label>
+                <input type="range" name="brushSize" id="brushSize" value="5" min="1" max="20" aria-label="Brush Size">
+            </div>
+
+            <div class="tool-section">
+                <label>
+                    <input type="checkbox" id="fillShape" aria-label="Fill Shape">
+                    Fill Shape
+                </label>
+            </div>
+        </div>
+
+        <!-- Canvas area -->
+        <div class="canvas-container">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Canvas Paint Application</p>
+    </footer>
+
+    <script src="/static/canva.js"></script>
+</body>
+
+</html>
