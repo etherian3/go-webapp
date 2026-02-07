@@ -317,3 +317,28 @@ name: TOKEN
 secrets: githubtokensample12312
 ```
 
+After we trigger Github Actions, we can check docker images tag in registry, values.yaml.
+
+Now We're gonna implementing Argo CD.
+
+First, we need to install Argo CD and create namespace argocd:
+```
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+Next
+```
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+Verify:
+kubectl get svc -n argocd
+```
+We can see ports tcp ```30398```:
+```
+80:30398/TCP,443:32633/TCP
+```
+Then see the external-ip nodes argocd ```13.213.37.99```:
+```
+kubectl get nodes -o wide
+```
+And try to access it within our browser with external-ip:port.
+
