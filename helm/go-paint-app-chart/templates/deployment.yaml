@@ -1,0 +1,22 @@
+# this is a sample deployment file for my application.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-paint-app
+  labels:
+    app: go-paint-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-paint-app
+  template:
+    metadata:
+      labels:
+        app: go-paint-app
+    spec:
+      containers:
+      - name: go-paint-app
+        image: etheriannn/go-webapp:v1
+        ports:
+        - containerPort: 8080
