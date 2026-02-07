@@ -199,3 +199,113 @@ And this for uninstall go-paint-app service a whole things with single command:
 ```
 helm uninstall go-paint-app 
 ```
+
+## CI & CD
+We'll use Github actions for CI, and Gitops/ArgoCd for CD.
+
+In our project dir, create a folder ./github/workflows/, and create a file with cicd.yaml, whatever u name it. and fill with this code:
+``` cicd.yaml
+name: CICD
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - "helm/**"
+      - "k8s/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: set up Go 1.22
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.22
+
+      - name: Build
+        run: go build -o main .
+
+      - name: Test
+        run: go test -v ./...
+
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v6
+        with:
+          version: v1.56.2
+
+  push:
+    runs-on: ubuntu-latest
+
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push action
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/go-web-app:${{github.run_id}}
+
+  update-newtag-in-helm-chart:
+    runs-on: ubuntu-latest
+
+    needs: push
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.TOKEN }}
+
+      - name: Update tag in Helm chart
+        run: |
+          sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/go-web-app-chart/values.yaml
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "rianziwalker@gmail.com"
+          git config --global user.name "etherian3"
+          git add helm/go-web-app-chart/values.yaml
+          git commit -m "Update tag in Helm chart"
+          git push
+
+```
+After that, create a secrets key on repo/settings/secrets/actions/new, and fill the var with secrets.
+```
+name: DOCKERHUB_USERNAME
+secrets: etheriannn
+
+name: DOCKERHUB_TOKEN
+secrets: sample123
+
+name: TOKEN
+secrets: githubtokensample12312
+```
+
