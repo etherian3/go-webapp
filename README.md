@@ -133,6 +133,69 @@ And add our ip to /etc/hosts with assigning ip to host in our ingress config:
 After that we can access our app instead of using address in ingress, we can access by running ```go-paint-app.local``` in our browser.
 
 
+<br>
+Next things is using Helm.
+To verify helm was intalled on machine:
 
+```
+helm version
+```
+Create a new folder name helm, and inside of helm directory run this command:
+```
+helm create go-paint-app-chart
+```
+Next delete /charts folder, and change dir to /templates and delete everything inside of templates folder.
 
+Copy all of config inside of ```/k8s/manifest/``` ```deployment.yaml```, ```service.yaml```, ```ingress.yaml```.
 
+Go ahead, edit a tag with replaced by variable in deployment.yaml, from this:
+```
+image: etheriannn/go-webapp:v1
+```
+to this:
+```
+etheriannn/go-webapp:{{ .Values.image.tag }}
+```
+
+Replace contents of values.yaml with this code, reference from ```https://github.com/iam-veeramalla/go-web-app-devops/blob/main/helm/go-web-app-chart/values.yaml```:
+```
+# Default values for go-web-app-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: etheriannn/go-web-app
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1"
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+  - host: chart-example.local
+    paths:
+    - path: /
+      pathType: ImplementationSpecific
+
+```
+Then, delete all the service which we implemented and running before such as deployment, service, ingress:
+```
+kubectl delete deploy go-paint-app
+kubectl delete svc go-paint-app
+kubectl delete ing go-paint-app
+```
+
+Change dir to helm dir above go-web-app-chart is /helm and run:
+```
+helm install go-paint-app ./go-paint-app-chart
+```
+And this for uninstall go-paint-app service a whole things with single command:
+```
+helm uninstall go-paint-app 
+```
