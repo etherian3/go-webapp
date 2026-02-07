@@ -205,44 +205,52 @@ We'll use Github actions for CI, and Gitops/ArgoCd for CD.
 
 In our project dir, create a folder ./github/workflows/, and create a file with cicd.yaml, whatever u name it. and fill with this code:
 ``` cicd.yaml
-name: CICD
+# CICD using GitHub actions
 
+name: CI/CD
+
+# Exclude the workflow to run on changes to the helm chart
 on:
   push:
     branches:
       - main
     paths-ignore:
-      - "README.md"
       - "helm/**"
       - "k8s/**"
+      - "README.md"
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: set up Go 1.22
+      - name: Set up Go 1.22
         uses: actions/setup-go@v2
         with:
           go-version: 1.22
 
       - name: Build
-        run: go build -o main .
+        run: go build -o go-web-app
 
       - name: Test
-        run: go test -v ./...
+        run: go test ./...
 
   code-quality:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: golangci-lint
+      - name: Set up Go 1.22
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.22
+
+      - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.56.2
@@ -286,13 +294,13 @@ jobs:
 
       - name: Update tag in Helm chart
         run: |
-          sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/go-web-app-chart/values.yaml
+          sed -i 's/tag: .*/tag: "${{github.run_id}}"/' helm/go-paint-app-chart/values.yaml
 
       - name: Commit and push changes
         run: |
           git config --global user.email "rianziwalker@gmail.com"
           git config --global user.name "etherian3"
-          git add helm/go-web-app-chart/values.yaml
+          git add helm/go-paint-app-chart/values.yaml
           git commit -m "Update tag in Helm chart"
           git push
 
