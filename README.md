@@ -372,3 +372,31 @@ Copy the password and run this command:
 echo paswordxyz1433## | base64 --decode
 ```
 Use decoded output for the password.
+Create an applications, after done.
+
+check all resources:
+```
+kubectl get all
+kubectl get ing
+```
+Copy address ingress our argocd app, and run this:
+```
+nslookup a9cf8c863bc0e4dcb9e5510afddba6bd-78b70adb6700a561.elb.ap-southeast-1.amazonaws.com
+
+outputs:
+Server:		8.8.8.8
+Address:	8.8.8.8#53
+
+Non-authoritative answer:
+Name:	a9cf8c863bc0e4dcb9e5510afddba6bd-78b70adb6700a561.elb.ap-southeast-1.amazonaws.com
+Address: 3.0.22.219
+Name:	a9cf8c863bc0e4dcb9e5510afddba6bd-78b70adb6700a561.elb.ap-southeast-1.amazonaws.com
+Address: 18.141.106.72
+Name:	a9cf8c863bc0e4dcb9e5510afddba6bd-78b70adb6700a561.elb.ap-southeast-1.amazonaws.com
+Address: 13.215.113.122
+```
+Copy the last address, and add into a new line in /etc/hosts, it should like this:
+```
+13.215.113.122 go-paint-app.local
+```
+Finally we can access our app with go-paint.app.local.
