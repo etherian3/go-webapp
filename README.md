@@ -324,6 +324,8 @@ After we trigger Github Actions, we can check docker images tag in registry, val
 
 Now We're gonna implementing Argo CD.
 
+## ArgoCD + Helm templates
+
 First, we need to install Argo CD and create namespace argocd:
 ```
 kubectl create namespace argocd
