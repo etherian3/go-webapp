@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
       - name: go-paint-app
-        image: etheriannn/go-webapp:v1
+        image: etheriannn/go-webapp:{{ .Values.image.tag }}
         ports:
         - containerPort: 8080
