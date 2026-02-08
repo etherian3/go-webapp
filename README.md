@@ -134,6 +134,9 @@ After that we can access our app instead of using address in ingress, we can acc
 
 
 <br>
+
+## Helm
+
 Next things is using Helm.
 To verify helm was intalled on machine:
 
@@ -340,5 +343,9 @@ Then see the external-ip nodes argocd ```13.213.37.99```:
 ```
 kubectl get nodes -o wide
 ```
+Before you access argocd, make sure tcp port allows you to access it.
+Open NodePort in your Security Group node:
+1.	AWS Console → EC2 → Security Groups
+2.	Find your SG cluster, and add your ports allow. <br>
 And try to access it within our browser with external-ip:port.
 
