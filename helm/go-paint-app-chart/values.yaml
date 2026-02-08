@@ -8,7 +8,7 @@ image:
   repository: etheriannn/go-webapp
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "21796942786"
+  tag: "v1"
 
 ingress:
   enabled: false
