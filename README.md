@@ -169,7 +169,7 @@ Replace contents of values.yaml with this code, reference from ```https://github
 replicaCount: 1
 
 image:
-  repository: etheriannn/go-web-app
+  repository: etheriannn/go-webapp
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: "v1"
