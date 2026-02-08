@@ -349,3 +349,24 @@ Open NodePort in your Security Group node:
 2.	Find your SG cluster, and add your ports allow. <br>
 And try to access it within our browser with external-ip:port.
 
+Login into ArgoCD UI:
+username: admin
+for the password, we can get the password by running this:
+```
+kubectl get secrets -n argocd
+output:
+NAME                          TYPE     DATA   AGE
+argocd-initial-admin-secret   Opaque   1      98m
+argocd-notifications-secret   Opaque   0      98m
+argocd-redis                  Opaque   1      98m
+argocd-secret                 Opaque   5      98m
+```
+We can go to inside ```argocd-initial-admin-secret``` by editing without changing anything.
+```
+kubectl edit secrets -n argocd argocd-initial-admin-secret
+```
+Copy the password and run this command:
+```
+echo paswordxyz1433## | base64 --decode
+```
+Use decoded output for the password.
